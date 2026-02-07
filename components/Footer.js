@@ -25,6 +25,19 @@ export default function Footer() {
           >
             Email Me
           </a>
+          <a 
+            href="https://wa.me/917909050538" 
+            target="_blank"
+            className="hover:text-green-400 transition uppercase tracking-widest text-sm font-bold"
+          >
+            WhatsApp
+          </a>
+          <a 
+            href="tel:+917909050538" 
+            className="hover:text-white transition uppercase tracking-widest text-sm font-bold"
+          >
+            +91 7909050538
+          </a>
         </div>
 
         {/* Right: Admin Link (Subtle) */}
