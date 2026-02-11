@@ -3,16 +3,37 @@ import Project from '@/models/Project';
 import { NextResponse } from 'next/server';
 
 // GET: Fetch projects
-export async function GET(request) {
-  await dbConnect();
-  const url = new URL(request.url);
-  const isAdmin = url.searchParams.get('admin') === 'true';
+// export async function GET(request) {
+//   await dbConnect();
+//   const url = new URL(request.url);
+//   const isAdmin = url.searchParams.get('admin') === 'true';
 
-  // If Admin, show ALL. If Public, show only ACTIVE.
-  const query = isAdmin ? {} : { active: true };
+//   // If Admin, show ALL. If Public, show only ACTIVE.
+//   const query = isAdmin ? {} : { active: true };
   
-  const projects = await Project.find(query).sort({ createdAt: -1 });
-  return NextResponse.json({ success: true, data: projects });
+//   const projects = await Project.find(query).sort({ createdAt: -1 });
+//   return NextResponse.json({ success: true, data: projects });
+// }
+
+export async function GET() {
+  try {
+    // 1. Connect to DB
+    await dbConnect(); 
+    
+    // 2. Fetch data
+    const projects = await Project.find({}).sort({ createdAt: -1 });
+    
+    // 3. Return successful JSON
+    return NextResponse.json(projects);
+
+  } catch (error) {
+    // THIS IS THE FIX: Catch the error and return a formatted JSON error
+    console.error("API GET Error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch projects", details: error.message },
+      { status: 500 }
+    );
+  }
 }
 
 // POST: Create New
